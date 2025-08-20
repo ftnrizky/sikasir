@@ -9,9 +9,9 @@ function decrementAmount(button) {
     if (currentValue > 1) {
         input.value = currentValue - 1;
 
-        // Trigger price update if in detailed view
+        // Trigger harga_jual update if in detailed view
         if (window.currentViewMode === "detailed") {
-            updateDetailedPrice(input);
+            updateDetailedHarga_jual(input);
         }
     }
 }
@@ -23,19 +23,19 @@ function incrementAmount(button) {
     const currentValue = parseInt(input.value) || 1;
     input.value = currentValue + 1;
 
-    // Trigger price update if in detailed view
+    // Trigger harga_jual update if in detailed view
     if (window.currentViewMode === "detailed") {
-        updateDetailedPrice(input);
+        updateDetailedHarga_jual(input);
     }
 }
 
-// Price update functions
-function updateDetailedPrice(element) {
+// harga_jual update functions
+function updateDetailedHarga_jual(element) {
     const form = element.closest("form");
     if (!form) return;
 
     const productId = form.getAttribute("data-product-id");
-    const basePrice = parseInt(form.getAttribute("data-base-price")) || 0;
+    const baseHarga_jual = parseInt(form.getAttribute("data-base-Harga_jual")) || 0;
 
     // Get current selections
     const amount =
@@ -47,34 +47,34 @@ function updateDetailedPrice(element) {
         `input[name="topping_${productId}"]:checked`
     );
 
-    let totalPrice = basePrice;
+    let totalHarga_jual = baseHarga_jual;
 
     // Add size modifier
-    if (sizeInput && sizeInput.getAttribute("data-price-modifier")) {
-        totalPrice +=
-            parseInt(sizeInput.getAttribute("data-price-modifier")) || 0;
+    if (sizeInput && sizeInput.getAttribute("data-harga_jual-modifier")) {
+        totalHarga_jual +=
+            parseInt(sizeInput.getAttribute("data-harga_jual-modifier")) || 0;
     }
 
     // Add topping modifier
-    if (toppingInput && toppingInput.getAttribute("data-price-modifier")) {
-        totalPrice +=
-            parseInt(toppingInput.getAttribute("data-price-modifier")) || 0;
+    if (toppingInput && toppingInput.getAttribute("data-harga_jual-modifier")) {
+        totalHarga_jual +=
+            parseInt(toppingInput.getAttribute("data-harga_jual-modifier")) || 0;
     }
 
     // Multiply by amount
-    totalPrice *= amount;
+    totalHarga_jual *= amount;
 
     // Update display
-    const priceDisplay = document.getElementById(`total-price-${productId}`);
-    if (priceDisplay) {
-        priceDisplay.textContent = `Rp ${totalPrice.toLocaleString("id-ID")}`;
+    const harga_jualDisplay = document.getElementById(`total-harga_jual-${productId}`);
+    if (harga_jualDisplay) {
+        harga_jualDisplay.textContent = `Rp ${totalHarga_jual.toLocaleString("id-ID")}`;
     }
 
     // Update form data
-    form.setAttribute("data-item-price", totalPrice);
+    form.setAttribute("data-item-harga_jual", totalHarga_jual);
 
     console.log(
-        `Price updated for product ${productId}: Rp ${totalPrice.toLocaleString(
+        `harga_jual updated for product ${productId}: Rp ${totalharga_jual.toLocaleString(
             "id-ID"
         )}`
     );
@@ -87,7 +87,7 @@ function addToOrder(event) {
     const form = event.target;
     const productId = form.getAttribute("data-product-id");
     const productName = form.getAttribute("data-product-name");
-    const costPrice = parseInt(form.getAttribute("data-cost-price")) || 0;
+    const costHarga_jual = parseInt(form.getAttribute("data-cost-harga_jual")) || 0;
     const amount =
         parseInt(form.querySelector('input[name="amount"]')?.value) || 1;
 
@@ -125,23 +125,23 @@ function addToOrder(event) {
         if (toppingInput) customizations.topping = toppingInput.value;
     }
 
-    // Calculate item price
-    const basePrice = parseInt(form.getAttribute("data-base-price")) || 0;
-    let itemPrice = basePrice;
+    // Calculate item harga_jual
+    const baseharga_jual = parseInt(form.getAttribute("data-base-harga_jual")) || 0;
+    let itemharga_jual = baseharga_jual;
 
     // Add size modifier
     if (customizations.size === "L") {
-        itemPrice += 3000;
+        itemharga_jual += 3000;
     }
 
     // Add topping modifier
     if (customizations.topping === "Susu Oat") {
-        itemPrice += 5000;
+        itemharga_jual += 5000;
     } else if (customizations.topping === "Espresso") {
-        itemPrice += 4000;
+        itemharga_jual += 4000;
     }
 
-    const totalPrice = itemPrice * amount;
+    const totalharga_jual = itemharga_jual * amount;
 
     // Create order item
     const orderItem = {
@@ -149,10 +149,10 @@ function addToOrder(event) {
         productId: productId,
         productName: productName,
         amount: amount,
-        itemPrice: itemPrice,
-        totalPrice: totalPrice,
-        costPrice: costPrice,
-        totalCostPrice: costPrice * amount,
+        itemharga_jual: itemharga_jual,
+        totalharga_jual: totalharga_jual,
+        costharga_jual: costharga_jual,
+        totalCostharga_jual: costharga_jual * amount,
         customizations: customizations,
     };
 
@@ -210,19 +210,19 @@ function resetForm(form) {
         );
         if (noTopping) noTopping.checked = true;
 
-        // Update price display
-        updateDetailedPrice(amountInput);
+        // Update harga_jual display
+        updateDetailedharga_jual(amountInput);
     }
 }
 
 // Export functions for global access
 window.decrementAmount = decrementAmount;
 window.incrementAmount = incrementAmount;
-window.updateDetailedPrice = updateDetailedPrice;
+window.updateDetailedharga_jual = updateDetailedharga_jual;
 window.addToOrder = addToOrder;
 
 // Legacy compatibility
-window.updatePrice = updateDetailedPrice;
+window.updateharga_jual = updateDetailedharga_jual;
 // Show message function
 function showMessage(message, type = "info") {
     const messageContainer = document.getElementById("message-container");

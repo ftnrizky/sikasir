@@ -5,7 +5,7 @@
         <h1 class="text-2xl font-bold mb-4 text-white">Tambah SubKategori</h1>
 
         <div class="bg-white rounded-lg shadow-md p-6">
-            <form action="{{ route('subcategories.store') }}" method="POST">
+            <form action="{{ route('admin.subcategories.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-bold mb-2">Nama subKategori</label>
@@ -26,7 +26,7 @@
                 <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow">
                     <i class="fas fa-save mr-2"></i>Simpan
                 </button>
-                <a href="{{ route('subcategories.index') }}"
+                <a href="{{ route('admin.subcategories.index') }}"
                     class="ml-2 bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded shadow">
                     <i class="fas fa-arrow-left mr-2"></i>Kembali
                 </a>

@@ -26,8 +26,8 @@ function updateOrderDisplay() {
                         <li>Sugar: ${escapeHtml(item.customizations.sugar)}</li>
                         <li>Ice: ${escapeHtml(item.customizations.ice)}</li>
                         <li>Topping: ${escapeHtml(item.customizations.topping)}</li>
-                        <li>Unit Price: Rp ${item.itemPrice.toLocaleString('id-ID')}</li>
-                        <li class="font-semibold text-green-600">Total: Rp ${item.totalPrice.toLocaleString('id-ID')}</li>
+                        <li>Unit Price: Rp ${item.itemHarga_jual.toLocaleString('id-ID')}</li>
+                        <li class="font-semibold text-green-600">Total: Rp ${item.totalHarga_jual.toLocaleString('id-ID')}</li>
                     </ul>
                 </div>
                 <div class="flex gap-2 ml-2">
@@ -50,7 +50,7 @@ function updateTotals() {
     const taxPercent = parseFloat(document.getElementById('tax-input')?.value) || 0;
 
     // Calculate subtotal
-    const subtotal = window.orderItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    const subtotal = window.orderItems.reduce((sum, item) => sum + item.totalHarga_jual, 0);
 
     // Calculate discount
     const discountAmount = (subtotal * discountPercent) / 100;
@@ -193,26 +193,26 @@ function updateOrderItemData(index, data) {
     };
 
     // Recalculate item price
-    const basePrice = parseInt(item.itemPrice / item.amount); // Get original base price
-    let newItemPrice = basePrice;
+    const baseHarga_jual = parseInt(item.itemHarga_jual / item.amount); // Get original base price
+    let newItemHarga_jual = baseHarga_jual;
 
     // Add size modifier
     if (data.size === 'L') {
-        newItemPrice += 3000;
+        newItemHarga_jual += 3000;
     }
 
     // Add topping modifier
     if (data.topping === 'Susu Oat') {
-        newItemPrice += 5000;
+        newItemHarga_jual += 5000;
     } else if (data.topping === 'Espresso') {
-        newItemPrice += 4000;
+        newItemHarga_jual += 4000;
     }
 
     // Update item data
     item.amount = data.amount;
-    item.itemPrice = newItemPrice;
-    item.totalPrice = newItemPrice * data.amount;
-    item.totalCostPrice = item.costPrice * data.amount;
+    item.itemHarga_jual = newItemHarga_jual;
+    item.totalHarga_jual = newItemHarga_jual * data.amount;
+    item.totalCostHarga_jual = item.totalCostHarga_jual * data.amount;
 
     updateOrderDisplay();
     updateTotals();
@@ -327,8 +327,8 @@ function updateOrderDisplay() {
                         <li>Sugar: ${escapeHtml(item.customizations.sugar)}</li>
                         <li>Ice: ${escapeHtml(item.customizations.ice)}</li>
                         <li>Topping: ${escapeHtml(item.customizations.topping)}</li>
-                        <li>Unit Price: Rp ${item.itemPrice.toLocaleString('id-ID')}</li>
-                        <li class="font-semibold text-green-600">Total: Rp ${item.totalPrice.toLocaleString('id-ID')}</li>
+                        <li>Unit Price: Rp ${item.itemHarga_jual.toLocaleString('id-ID')}</li>
+                        <li class="font-semibold text-green-600">Total: Rp ${item.totalHarga_jual.toLocaleString('id-ID')}</li>
                     </ul>
                 </div>
                 <div class="flex gap-2 ml-2">
@@ -351,7 +351,7 @@ function updateTotals() {
     const taxPercent = parseFloat(document.getElementById('tax-input')?.value) || 0;
 
     // Calculate subtotal
-    const subtotal = window.orderItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    const subtotal = window.orderItems.reduce((sum, item) => sum + item.totalHarga_jual, 0);
 
     // Calculate discount
     const discountAmount = (subtotal * discountPercent) / 100;
@@ -494,26 +494,26 @@ function updateOrderItemData(index, data) {
     };
 
     // Recalculate item price
-    const basePrice = parseInt(item.itemPrice / item.amount); // Get original base price
-    let newItemPrice = basePrice;
+    const baseHarga_jual = parseInt(item.itemHarga_jual / item.amount); // Get original base price
+    let newItemHarga_jual = baseHarga_jual;
 
     // Add size modifier
     if (data.size === 'L') {
-        newItemPrice += 3000;
+        newItemHarga_jual += 3000;
     }
 
     // Add topping modifier
     if (data.topping === 'Susu Oat') {
-        newItemPrice += 5000;
+        newItemHarga_jual += 5000;
     } else if (data.topping === 'Espresso') {
-        newItemPrice += 4000;
+        newItemHarga_jual += 4000;
     }
 
     // Update item data
     item.amount = data.amount;
-    item.itemPrice = newItemPrice;
-    item.totalPrice = newItemPrice * data.amount;
-    item.totalCostPrice = item.costPrice * data.amount;
+    item.itemHarga_jual = newItemHarga_jual;
+    item.totalHarga_jual = newItemHarga_jual * data.amount;
+    item.totalCostHarga_jual = item.costHarga_jual * data.amount;
 
     updateOrderDisplay();
     updateTotals();

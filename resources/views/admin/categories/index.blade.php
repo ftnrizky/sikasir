@@ -4,7 +4,7 @@
 <div class="ml-64 p-6 overflow-x-hidden bg-gray-100 text-gray-900">
     <h1 class="text-2xl font-bold mb-4 text-white">Daftar Kategori</h1>
 
-    <a href="{{ route('categories.create') }}"
+    <a href="{{ route('admin.categories.create') }}"
         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block">
         <i class="fas fa-plus mr-2"></i>Tambah Kategori
     </a>
@@ -25,12 +25,12 @@
                     <td class="py-2 px-4">{{ $category->description }}</td>
                     <td class="py-2 px-4">
                         <div class="flex space-x-2">
-                            <a href="{{ route('categories.edit', $category->id) }}"
+                            <a href="{{ route('admin.categories.edit', $category->id) }}"
                                 class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form id="delete-category-form-{{ $category->id }}"
-                                action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
                                 style="display: none;">
                                 @csrf
                                 @method('DELETE')

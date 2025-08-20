@@ -24,17 +24,13 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="price" class="block text-sm font-medium text-gray-700">Harga</label>
-                    <input type="number" name="price" id="price" value="{{ old('price', $product->price) }}"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        required>
+                    <label for="harga_modal" class="block font-medium">Harga Modal</label>
+                    <input type="number" name="harga_modal" class="w-full rounded border px-3 py-2" required>
                 </div>
 
                 <div class="mb-4">
-                    <label for="stock" class="block text-sm font-medium text-gray-700">Stok</label>
-                    <input type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        required>
+                    <label for="harga_jual" class="block font-medium">Harga Jual</label>
+                    <input type="number" name="harga_jual" class="w-full rounded border px-3 py-2" required>
                 </div>
                 <div class="mb-4">
                     <label for="category_id" class="block text-sm font-medium text-gray-700">Kategori</label>

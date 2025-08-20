@@ -32,7 +32,7 @@ function generateReceiptContent() {
     const taxPercent =
         parseFloat(document.getElementById("tax-input")?.value) || 0;
     const subtotal = window.orderItems.reduce(
-        (sum, item) => sum + item.totalPrice,
+        (sum, item) => sum + item.totalHarga_jua,
         0
     );
     const discountAmount = (subtotal * discountPercent) / 100;
@@ -79,10 +79,10 @@ function generateReceiptContent() {
                         )}</div>
                     </div>
                     <div class="flex justify-between mt-1 font-medium">
-                        <span>@ Rp ${item.itemPrice.toLocaleString(
+                        <span>@ Rp ${item.itemHarga_jual.toLocaleString(
                             "id-ID"
                         )}</span>
-                        <span>Rp ${item.totalPrice.toLocaleString(
+                        <span>Rp ${item.totalHarga_jual.toLocaleString(
                             "id-ID"
                         )}</span>
                     </div>
@@ -203,10 +203,10 @@ function generateReceiptFromOrderData(orderData) {
                         )}</div>
                     </div>
                     <div class="flex justify-between mt-1 font-medium">
-                        <span>@ Rp ${item.itemPrice.toLocaleString(
+                        <span>@ Rp ${item.itemHatotalHarga_jual.toLocaleString(
                             "id-ID"
                         )}</span>
-                        <span>Rp ${item.totalPrice.toLocaleString(
+                        <span>Rp ${item.totalHarga_jual.toLocaleString(
                             "id-ID"
                         )}</span>
                     </div>
@@ -404,7 +404,7 @@ function printOrderReceipt(orderData = null) {
         items: window.orderItems,
         totals: {
             subtotal: window.orderItems.reduce(
-                (sum, item) => sum + item.totalPrice,
+                (sum, item) => sum + item.totalHarga_jual,
                 0
             ),
             discount:

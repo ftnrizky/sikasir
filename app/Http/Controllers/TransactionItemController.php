@@ -35,7 +35,7 @@ class TransactionItemController extends Controller
         $total = 0;
         foreach ($request->products as $item) {
             $product = Product::find($item['product_id']);
-            $total += $product->price * $item['qty'];
+            $total += $product->harga_jual * $item['qty'];
         }
 
         $transaction = Transaction::create([
@@ -52,8 +52,8 @@ class TransactionItemController extends Controller
                 'transaction_id' => $transaction->id,
                 'product_id' => $item['product_id'],
                 'qty' => $item['qty'],
-                'price' => $product->price,
-                'subtotal' => $product->price * $item['qty']
+                'harga_jual' => $product->harga_jual,
+                'subtotal' => $product->harga_jual * $item['qty']
             ]);
         }
 

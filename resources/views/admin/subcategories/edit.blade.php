@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-xl mx-auto bg-white p-6 rounded shadow mt-8">
     <h2 class="text-lg font-semibold text-gray-700 mb-4">Edit Subkategori</h2>
-    <form action="{{ route('subcategories.update', $subcategory->id) }}" method="POST">
+    <form action="{{ route('admin.subcategories.update', $subcategory->id) }}" method="POST">
         @csrf
         @method('PUT')
 

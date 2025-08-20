@@ -15,7 +15,7 @@ class SubcategoryController extends Controller
     public function index()
     {
         $subcategories = Subcategory::with('category')->get();
-        return view('subcategories.index', compact('subcategories'));
+        return view('admin.subcategories.index', compact('subcategories'));
     }
 
     /**
@@ -24,31 +24,36 @@ class SubcategoryController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('subcategories.create', compact('categories'));
+        return view('admin.subcategories.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:subcategories,name',
+            'name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         Subcategory::create([
             'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'category_id' => $request->category_id,
         ]);
 
-        return redirect()->route('subcategories.index')->with('success', 'Subkategori berhasil ditambahkan.');
+        return redirect()->route('admin.subcategories.index')->with('success', 'Subkategori berhasil ditambahkan.');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Subcategory $subcategory)
     {
-        return view('subcategories.show', compact('subcategory'));
+        return view('admin.subcategories.show', compact('subcategory'));
     }
 
     /**
@@ -57,7 +62,7 @@ class SubcategoryController extends Controller
     public function edit(Subcategory $subcategory)
     {
         $categories = Category::all();
-        return view('subcategories.edit', compact('subcategory', 'categories'));
+        return view('admin.subcategories.edit', compact('subcategory', 'categories'));
     }
 
     /**
@@ -66,15 +71,19 @@ class SubcategoryController extends Controller
     public function update(Request $request, Subcategory $subcategory)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:subcategories,name,' . $subcategory->id,
+            'name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $subcategory->update([
             'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'category_id' => $request->category_id,
         ]);
 
-        return redirect()->route('subcategories.index')->with('success', 'Subkategori berhasil diperbarui.');
+        return redirect()->route('admin.subcategories.index')->with('success', 'Subkategori berhasil diperbarui.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -82,6 +91,6 @@ class SubcategoryController extends Controller
     public function destroy(Subcategory $subcategory)
     {
         $subcategory->delete();
-        return redirect()->route('subcategories.index')->with('success', 'Subkategori berhasil dihapus.');
+        return redirect()->route('admin.subcategories.index')->with('success', 'Subkategori berhasil dihapus.');
     }
 }

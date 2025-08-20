@@ -41,4 +41,9 @@ class KasirController extends Controller
 
         return response()->json(['message' => 'Transaksi berhasil!', 'id' => $transaction->id]);
     }
+    public function show($id)
+{
+    $transaction = Transaction::with('items.product')->findOrFail($id);
+    return view('kasir.show', compact('transaction'));
+}
 }

@@ -29,20 +29,20 @@
                     </button>
                     <ul class="hidden mt-2 bg-amber-800 rounded-lg overflow-hidden">
                         <li>
-                            <a href="{{ route('categories.index') }}"
+                            <a href="{{ route('admin.categories.index') }}"
                                 class="block px-4 py-3 text-fuchsia-50 hover:bg-amber-950 pl-11">
                                 Kategori Menu
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('subcategories.index') }}"
+                            <a href="{{ route('admin.subcategories.index') }}"
                                 class="block px-4 py-3 text-fuchsia-50 hover:bg-amber-950 pl-11">
                                 Sub Kategori
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li><a href="{{ route('kasir.index') }}"
+                <li><a href="{{ route('kasir.transaksi.index') }}"
                         class="flex items-center gap-3 px-4 py-3 text-fuchsia-50 hover:bg-amber-950 rounded-lg"><i
                             class="bi bi-receipt"></i><span>Kasir</span></a></li>
                 <li><a href="#"

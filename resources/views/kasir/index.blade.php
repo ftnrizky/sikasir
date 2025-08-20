@@ -105,14 +105,14 @@
                         <form class="product-item detailed-view bg-white rounded-lg shadow-lg p-6"
                             data-category="{{ $product->category->name }}" method="POST" action="#"
                             onsubmit="addToOrder(event)" data-product-name="{{ $product->name }}"
-                            data-product-price="{{ $product->price }}" data-cost-price="{{ $product->cost_price }}"
-                            data-product-id="{{ $product->id }}" data-base-price="{{ $product->price }}"
-                            data-item-price="{{ $product->price }}" data-customizations="[]">
+                            data-product-harga_jual="{{ $product->harga_jual }}" data-cost-harga_jual="{{ $product->cost_harga_jual }}"
+                            data-product-id="{{ $product->id }}" data-base-harga_jual="{{ $product->harga_jual }}"
+                            data-item-harga_jual="{{ $product->harga_jual }}" data-customizations="[]">
 
                             <header class="mb-4">
                                 <h2 class="font-bold text-xl text-green-700">
                                     {{ $loop->iteration < 10 ? '0' . $loop->iteration : $loop->iteration }}.
-                                    {{ $product->name }} (Rp {{ number_format($product->price, 0, ',', '.') }})</h2>
+                                    {{ $product->name }} (Rp {{ number_format($product->harga_jual, 0, ',', '.') }})</h2>
                             </header>
 
                             <div class="flex gap-6">
@@ -133,7 +133,7 @@
                                                 onclick="decrementAmount(this)">-</button>
                                             <input type="text" name="amount" value="1"
                                                 class="w-12 text-center border rounded h-12 focus:outline-none focus:ring-2 focus:ring-[#005281]"
-                                                onchange="updateDetailedPrice(this)">
+                                                onchange="updateDetailedHarga_jual(this)">
                                             <button type="button"
                                                 class="px-3 py-1 bg-[#e17f12] rounded-full w-12 h-12 shadow text-white hover:bg-[#d16d0a] transition-colors"
                                                 onclick="incrementAmount(this)">+</button>
@@ -149,9 +149,9 @@
                                                     <input type="radio" name="size_{{ $product->id }}"
                                                         id="size-{{ $size }}-{{ $product->id }}"
                                                         value="{{ $size }}" class="sr-only peer"
-                                                        onchange="updateDetailedPrice(this)"
+                                                        onchange="updateDetailedHarga_jual(this)"
                                                         {{ $size === 'M' ? 'checked' : '' }}
-                                                        data-price-modifier="{{ $size === 'L' ? '3000' : '0' }}">
+                                                        data-harga_jual-modifier="{{ $size === 'L' ? '3000' : '0' }}">
                                                     <label for="size-{{ $size }}-{{ $product->id }}"
                                                         class="flex items-center justify-center px-3 py-1 border rounded-full w-12 h-12 text-center cursor-pointer peer-checked:bg-[#e17f12] peer-checked:text-white hover:bg-gray-100 transition-colors">{{ $size }}</label>
                                                 </div>
@@ -169,7 +169,7 @@
                                                     <input type="radio" name="sugar_{{ $product->id }}"
                                                         id="sugar-{{ $sugar }}-{{ $product->id }}"
                                                         value="{{ $sugar }}" class="sr-only peer"
-                                                        onchange="updateDetailedPrice(this)"
+                                                        onchange="updateDetailedHarga_jual(this)"
                                                         {{ $sugar === 50 ? 'checked' : '' }}>
                                                     <label for="sugar-{{ $sugar }}-{{ $product->id }}"
                                                         class="flex items-center justify-center px-2 py-1 border rounded-full w-12 h-12 text-center cursor-pointer peer-checked:bg-[#e17f12] peer-checked:text-white hover:bg-gray-100 transition-colors text-xs">{{ $sugar }}%</label>
@@ -187,7 +187,7 @@
                                                     <input type="radio" name="ice_{{ $product->id }}"
                                                         id="ice-{{ $ice }}-{{ $product->id }}"
                                                         value="{{ $ice }}" class="sr-only peer"
-                                                        onchange="updateDetailedPrice(this)"
+                                                        onchange="updateDetailedHarga_jual(this)"
                                                         {{ $ice === 50 ? 'checked' : '' }}>
                                                     <label for="ice-{{ $ice }}-{{ $product->id }}"
                                                         class="flex items-center justify-center px-2 py-1 border rounded-full w-12 h-12 text-center cursor-pointer peer-checked:bg-[#e17f12] peer-checked:text-white hover:bg-gray-100 transition-colors text-xs">{{ $ice }}%</label>
@@ -204,8 +204,8 @@
                                                 <div class="relative">
                                                     <input type="radio" name="topping_{{ $product->id }}"
                                                         id="topping-none-{{ $product->id }}" value="No Topping"
-                                                        class="sr-only peer" onchange="updateDetailedPrice(this)" checked
-                                                        data-price-modifier="0">
+                                                        class="sr-only peer" onchange="updateDetailedHarga_jual(this)" checked
+                                                        data-harga_jual-modifier="0">
                                                     <label for="topping-none-{{ $product->id }}"
                                                         class="block w-full px-4 py-2 border rounded cursor-pointer peer-checked:bg-[#e17f12] peer-checked:text-white hover:bg-gray-100 text-center transition-colors">No
                                                         Topping</label>
@@ -213,8 +213,8 @@
                                                 <div class="relative">
                                                     <input type="radio" name="topping_{{ $product->id }}"
                                                         id="topping-oat-{{ $product->id }}" value="Susu Oat"
-                                                        class="sr-only peer" onchange="updateDetailedPrice(this)"
-                                                        data-price-modifier="5000">
+                                                        class="sr-only peer" onchange="updateDetailedHarga_jual(this)"
+                                                        data-harga_jual-modifier="5000">
                                                     <label for="topping-oat-{{ $product->id }}"
                                                         class="block w-full px-4 py-2 border rounded cursor-pointer peer-checked:bg-[#e17f12] peer-checked:text-white hover:bg-gray-100 text-center transition-colors">Susu
                                                         Oat +(5K)</label>
@@ -222,8 +222,8 @@
                                                 <div class="relative">
                                                     <input type="radio" name="topping_{{ $product->id }}"
                                                         id="topping-espresso-{{ $product->id }}" value="Espresso"
-                                                        class="sr-only peer" onchange="updateDetailedPrice(this)"
-                                                        data-price-modifier="4000">
+                                                        class="sr-only peer" onchange="updateDetailedHarga_jual(this)"
+                                                        data-harga_jual-modifier="4000">
                                                     <label for="topping-espresso-{{ $product->id }}"
                                                         class="block w-full px-4 py-2 border rounded cursor-pointer peer-checked:bg-[#e17f12] peer-checked:text-white hover:bg-gray-100 text-center transition-colors">Espresso
                                                         +(4K)</label>
@@ -233,10 +233,10 @@
 
                                         <div class="p-4 bg-gray-50 rounded-lg flex flex-col justify-between">
                                             <div class="text-center">
-                                                <label class="block font-medium text-gray-700 mb-2">Total Price:</label>
-                                                <span id="total-price-{{ $product->id }}"
+                                                <label class="block font-medium text-gray-700 mb-2">Total Harga:</label>
+                                                <span id="total-harga-{{ $product->id }}"
                                                     class="text-2xl font-bold text-[#e17f12] block mb-4">Rp
-                                                    {{ number_format($product->price, 0, ',', '.') }}</span>
+                                                    {{ number_format($product->harga_jual, 0, ',', '.') }}</span>
                                             </div>
                                             <button type="submit"
                                                 class="w-full px-6 py-3 bg-[#005281] text-white rounded-lg hover:bg-[#004371] transition-colors font-medium">Add
@@ -256,9 +256,9 @@
                             class="product-item card-view bg-white rounded-lg shadow-sm border hover:shadow-md transition-all duration-300 w-full"
                             data-category="{{ $product->category->name }}" method="POST" action="#"
                             onsubmit="addToOrder(event)" data-product-name="{{ $product->name }}"
-                            data-product-price="{{ $product->price }}" data-cost-price="{{ $product->cost_price }}"
-                            data-product-id="{{ $product->id }}" data-base-price="{{ $product->price }}"
-                            data-item-price="{{ $product->price }}" data-customizations="[]">
+                            data-product-harga_jual="{{ $product->harga_jual }}" data-cost-harga_jual="{{ $product->cost_harga_jual }}"
+                            data-product-id="{{ $product->id }}" data-base-harga_jual="{{ $product->harga_jual }}"
+                            data-item-harga_jual="{{ $product->harga_jual }}" data-customizations="[]">
 
                             <div class="w-full h-[140px] overflow-hidden rounded-t-lg">
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
@@ -269,7 +269,7 @@
                                 <h3 class="font-semibold text-sm text-[#005281] leading-tight truncate">
                                     {{ $product->name }}</h3>
                                 <p class="text-[#e17f12] font-semibold text-xs mt-1">
-                                    Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    Rp {{ number_format($product->harga_jual, 0, ',', '.') }}
                                 </p>
                             </div>
 
@@ -378,21 +378,21 @@
                 </div>
 
                 <!-- Hidden Forms -->
-                <form id="transactionForm" method="POST" action="{{ route('transactions.store') }}"
-                    style="display:none;">
+              <form action="{{ route(name: 'kasir.transaksi.store') }}" method="POST">
+
                     @csrf
                     <input type="hidden" name="subtotal" id="transaction_subtotal">
-                    <input type="hidden" name="total_cost_price" id="transaction_total_cost_price">
+                    <input type="hidden" name="total_cost_harga_jual" id="transaction_total_cost_harga_jual">
                     <input type="hidden" name="name_user" id="transaction_name_user" value="{{ Auth::user()->name }}">
                     <input type="hidden" name="payment_method" id="transaction_payment_method" value="tunai">
                     <input type="hidden" name="timestamp" id="transaction_timestamp">
                 </form>
 
-                <form id="transactionQRISForm" method="POST" action="{{ route('transactions.store') }}"
+                <form id="transactionQRISForm" method="POST" action="{{ route('kasir.transaksi.store') }}"
                     style="display:none;">
                     @csrf
                     <input type="hidden" name="subtotal" id="transaction_qris_subtotal">
-                    <input type="hidden" name="total_cost_price" id="transaction_qris_total_cost_price">
+                    <input type="hidden" name="total_cost_harga_jual" id="transaction_qris_total_cost_harga_jual">
                     <input type="hidden" name="name_user" id="transaction_qris_name_user"
                         value="{{ Auth::user()->name }}">
                     <input type="hidden" name="payment_method" id="transaction_qris_payment_method" value="qris">

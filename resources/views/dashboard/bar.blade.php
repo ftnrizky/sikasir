@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-@endsection
 <main class="mt-16 overflow-y-auto h-[calc(100vh-4rem)] p-4">
              @yield('content')
              @php
@@ -51,3 +50,4 @@
                  </div>
              </div>
          </main>
+@endsection

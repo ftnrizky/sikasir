@@ -186,18 +186,18 @@ function validateOrderItems(items) {
         item.productId && 
         item.productName && 
         item.amount > 0 && 
-        item.totalPrice > 0
+        item.totalHarga_jual > 0
     );
 }
 
 // Calculate totals helper
 function calculateOrderTotals(items, discountPercent = 0, taxPercent = 0) {
-    const subtotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
+    const subtotal = items.reduce((sum, item) => sum + item.totalHarga_jual, 0);
     const discountAmount = (subtotal * discountPercent) / 100;
     const subtotalAfterDiscount = subtotal - discountAmount;
     const taxAmount = (subtotalAfterDiscount * taxPercent) / 100;
     const grandTotal = subtotalAfterDiscount + taxAmount;
-    const totalCostPrice = items.reduce((sum, item) => sum + item.totalCostPrice, 0);
+    const totalCostHarga_jual = items.reduce((sum, item) => sum + item.totalCostHarga_jual, 0);
 
     return {
         subtotal: Math.round(subtotal),
@@ -205,7 +205,7 @@ function calculateOrderTotals(items, discountPercent = 0, taxPercent = 0) {
         subtotalAfterDiscount: Math.round(subtotalAfterDiscount),
         taxAmount: Math.round(taxAmount),
         grandTotal: Math.round(grandTotal),
-        totalCostPrice: Math.round(totalCostPrice)
+        totalCostHarga_jual: Math.round(totalCostHarga_jual)
     };
 }// utils.js - Utility Functions
 
@@ -395,18 +395,18 @@ function validateOrderItems(items) {
         item.productId && 
         item.productName && 
         item.amount > 0 && 
-        item.totalPrice > 0
+        item.totalHarga_jual > 0
     );
 }
 
 // Calculate totals helper
 function calculateOrderTotals(items, discountPercent = 0, taxPercent = 0) {
-    const subtotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
+    const subtotal = items.reduce((sum, item) => sum + item.totalHarga_jual, 0);
     const discountAmount = (subtotal * discountPercent) / 100;
     const subtotalAfterDiscount = subtotal - discountAmount;
     const taxAmount = (subtotalAfterDiscount * taxPercent) / 100;
     const grandTotal = subtotalAfterDiscount + taxAmount;
-    const totalCostPrice = items.reduce((sum, item) => sum + item.totalCostPrice, 0);
+    const totalCostHarga_jual = items.reduce((sum, item) => sum + item.totalCostHarga_jual, 0);
 
     return {
         subtotal: Math.round(subtotal),
@@ -414,6 +414,6 @@ function calculateOrderTotals(items, discountPercent = 0, taxPercent = 0) {
         subtotalAfterDiscount: Math.round(subtotalAfterDiscount),
         taxAmount: Math.round(taxAmount),
         grandTotal: Math.round(grandTotal),
-        totalCostPrice: Math.round(totalCostPrice)
+        totalCostHarga_jual: Math.round(totalCostHarga_jual)
     };
 }

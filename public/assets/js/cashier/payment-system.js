@@ -8,7 +8,7 @@ function calculateGrandTotal() {
         parseFloat(document.getElementById("tax-input")?.value) || 0;
 
     const subtotal = window.orderItems.reduce(
-        (sum, item) => sum + item.totalPrice,
+        (sum, item) => sum + item.totalCostHarga_jual,
         0
     );
     const discountAmount = (subtotal * discountPercent) / 100;
@@ -26,14 +26,14 @@ function processPayment() {
     }
 
     const grandTotal = calculateGrandTotal();
-    const totalCostPrice = window.orderItems.reduce(
-        (sum, item) => sum + item.totalCostPrice,
+    const totalCostHarga_jual = window.orderItems.reduce(
+        (sum, item) => sum + item.totalCostHarga_jual,
         0
     );
 
     // Show payment confirmation with SweetAlert2
     if (typeof Swal !== "undefined") {
-        showCashPaymentModal(grandTotal, totalCostPrice);
+        showCashPaymentModal(grandTotal, totalCostHarga_jual);
     } else {
         // Fallback confirmation
         if (
@@ -43,13 +43,13 @@ function processPayment() {
                 )}?`
             )
         ) {
-            submitCashPayment(grandTotal, totalCostPrice);
+            submitCashPayment(grandTotal, totalCostHarga_jual);
         }
     }
 }
 
 // Show cash payment modal
-function showCashPaymentModal(grandTotal, totalCostPrice) {
+function showCashPaymentModal(grandTotal, totalCostHarga_jual) {
     Swal.fire({
         title: "Cash Payment",
         html: `
@@ -123,7 +123,7 @@ function showCashPaymentModal(grandTotal, totalCostPrice) {
     }).then((result) => {
         if (result.isConfirmed) {
             const { cashReceived, change } = result.value;
-            submitCashPayment(grandTotal, totalCostPrice, cashReceived, change);
+            submitCashPayment(grandTotal, totalCostHarga_jual, cashReceived, change);
         }
     });
 }
@@ -136,14 +136,14 @@ function processQRISPayment() {
     }
 
     const grandTotal = calculateGrandTotal();
-    const totalCostPrice = window.orderItems.reduce(
-        (sum, item) => sum + item.totalCostPrice,
+    const totalCostHarga_jual = window.orderItems.reduce(
+        (sum, item) => sum + item.totalCostHarga_jual,
         0
     );
 
     // Show QRIS payment confirmation
     if (typeof Swal !== "undefined") {
-        showQRISPaymentModal(grandTotal, totalCostPrice);
+        showQRISPaymentModal(grandTotal, totalCostHarga_jual);
     } else {
         // Fallback confirmation
         if (
@@ -153,13 +153,13 @@ function processQRISPayment() {
                 )}?`
             )
         ) {
-            submitQRISPayment(grandTotal, totalCostPrice);
+            submitQRISPayment(grandTotal, totalCostHarga_jual);
         }
     }
 }
 
 // Show QRIS payment modal
-function showQRISPaymentModal(grandTotal, totalCostPrice) {
+function showQRISPaymentModal(grandTotal, totalCostHarga_jual) {
     Swal.fire({
         title: "QRIS Payment",
         html: `
@@ -188,7 +188,7 @@ function showQRISPaymentModal(grandTotal, totalCostPrice) {
         cancelButtonColor: "#6b7280",
     }).then((result) => {
         if (result.isConfirmed) {
-            submitQRISPayment(grandTotal, totalCostPrice);
+            submitQRISPayment(grandTotal, totalCostHarga_jual);
         }
     });
 }
@@ -196,7 +196,7 @@ function showQRISPaymentModal(grandTotal, totalCostPrice) {
 // Submit cash payment
 function submitCashPayment(
     grandTotal,
-    totalCostPrice,
+    totalCostHarga_jual,
     cashReceived = null,
     change = null
 ) {
@@ -207,7 +207,7 @@ function submitCashPayment(
         // Prepare transaction data
         const transactionData = {
             subtotal: grandTotal,
-            total_cost_price: totalCostPrice,
+            total_cost_harga_jual: totalCostHarga_jual,
             name_user:
                 document.getElementById("transaction_name_user")?.value ||
                 "Unknown User",
@@ -226,7 +226,7 @@ function submitCashPayment(
             form.submit();
         } else {
             // Fallback: simulate successful payment
-            handlePaymentSuccess("cash", grandTotal, totalCostPrice);
+            handlePaymentSuccess("cash", grandTotal, totalCostHarga_jual);
         }
     } catch (error) {
         console.error("Error processing cash payment:", error);
@@ -235,7 +235,7 @@ function submitCashPayment(
 }
 
 // Submit QRIS payment
-function submitQRISPayment(grandTotal, totalCostPrice) {
+function submitQRISPayment(grandTotal, totalCostHarga_jual) {
     try {
         // Show processing message
         showMessage("Processing QRIS payment...", "info");
@@ -243,7 +243,7 @@ function submitQRISPayment(grandTotal, totalCostPrice) {
         // Prepare transaction data
         const transactionData = {
             subtotal: grandTotal,
-            total_cost_price: totalCostPrice,
+            total_cost_harga_jual: totalCostHarga_jual,
             name_user:
                 document.getElementById("transaction_qris_name_user")?.value ||
                 "Unknown User",
@@ -260,7 +260,7 @@ function submitQRISPayment(grandTotal, totalCostPrice) {
             form.submit();
         } else {
             // Fallback: simulate successful payment
-            handlePaymentSuccess("qris", grandTotal, totalCostPrice);
+            handlePaymentSuccess("qris", grandTotal, totalCostHarga_jual);
         }
     } catch (error) {
         console.error("Error processing QRIS payment:", error);
@@ -283,7 +283,7 @@ function updateTransactionForm(formId, data) {
 }
 
 // Handle successful payment (fallback when form submission isn't available)
-function handlePaymentSuccess(paymentMethod, grandTotal, totalCostPrice) {
+function handlePaymentSuccess(paymentMethod, grandTotal, totalCostHarga_jual) {
     // Show success message
     showMessage(
         `Payment successful! Amount: Rp ${grandTotal.toLocaleString("id-ID")}`,
@@ -312,7 +312,7 @@ function generateAndPrintReceipt(paymentMethod, totalAmount) {
         items: [...window.orderItems],
         totals: {
             subtotal: window.orderItems.reduce(
-                (sum, item) => sum + item.totalPrice,
+                (sum, item) => sum + item.totalHarga_jual,
                 0
             ),
             discount:
