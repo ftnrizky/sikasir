@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <main class="mt-16 overflow-y-auto h-[calc(100vh-4rem)] p-4">

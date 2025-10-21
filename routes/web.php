@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\KasirController;
@@ -8,9 +9,12 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\KitchenController;
-use App\Http\Controllers\UserManagementController;
+// use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TableController;
+use App\Http\Controllers\IngredientController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,10 +56,8 @@ Route::middleware(['auth', 'role:admin|owner'])->group(function () {
 // ==========================
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::resource('users', UserController::class);
 
-    // Manajemen user & role
-    Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
-    Route::put('/users/{user}/role', [UserManagementController::class, 'updateRole'])->name('users.updateRole');
 
     // Hanya admin
     Route::resource('categories', CategoryController::class);
@@ -79,9 +81,11 @@ Route::middleware(['auth', 'role:owner'])->prefix('owner')->name('owner.')->grou
 // ✅ Kasir routes
 // ==========================
 Route::middleware(['auth', 'role:kasir'])->prefix('kasir')->name('kasir.')->group(function () {
+    Route::get('/', [KasirController::class, 'index'])->name('index'); // ✅ route kasir.index
     Route::get('/dashboard', [KasirController::class, 'index'])->name('dashboard');
     Route::resource('transaksi', TransactionController::class)->only(['index', 'store']);
 });
+
 
 // ==========================
 // ✅ Bar routes
@@ -96,6 +100,41 @@ Route::middleware(['auth', 'role:bar'])->prefix('bar')->name('bar.')->group(func
 Route::middleware(['auth', 'role:kitchen'])->prefix('kitchen')->name('kitchen.')->group(function () {
     Route::get('/dashboard', [KitchenController::class, 'index'])->name('dashboard');
 });
+
+// table routes
+Route::resource('tables', TableController::class);
+
+// ==========================
+// ✅ Ingredient routes (Admin, Bar, Kitchen)
+
+// Admin — bisa CRUD penuh
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::resource('ingredients', IngredientController::class);
+    });
+
+// Bar — hanya lihat & ubah stok bahan baku bar
+Route::middleware(['auth', 'role:bar'])
+    ->prefix('bar')
+    ->name('bar.')
+    ->group(function () {
+        Route::get('ingredients', [IngredientController::class, 'index'])->name('ingredients.index');
+        Route::get('ingredients/{ingredient}/edit', [IngredientController::class, 'edit'])->name('ingredients.edit');
+        Route::put('ingredients/{ingredient}', [IngredientController::class, 'update'])->name('ingredients.update');
+    });
+
+// Kitchen — hanya lihat & ubah stok bahan baku kitchen
+Route::middleware(['auth', 'role:kitchen'])
+    ->prefix('kitchen')
+    ->name('kitchen.')
+    ->group(function () {
+        Route::get('ingredients', [IngredientController::class, 'index'])->name('ingredients.index');
+        Route::get('ingredients/{ingredient}/edit', [IngredientController::class, 'edit'])->name('ingredients.edit');
+        Route::put('ingredients/{ingredient}', [IngredientController::class, 'update'])->name('ingredients.update');
+    });
+
 
 // ==========================
 // ✅ Profile (semua user login)

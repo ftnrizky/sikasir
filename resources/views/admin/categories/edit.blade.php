@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="ml-64 p-6 bg-gray-100 min-h-screen">
-    <h1 class="text-2xl font-bold mb-4 text-white">Edit Kategori</h1>
+<div class=" p-6 bg-gray-100 min-h-screen">
+    <h1 class="text-2xl font-bold mb-4 text-black">Edit Kategori</h1>
 
     <div class="bg-white rounded-lg shadow-md p-6">
         <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">

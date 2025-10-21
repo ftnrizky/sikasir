@@ -33,4 +33,12 @@ class Product extends Model
     {
         return $this->harga_jual - $this->harga_modal;
     }
+
+    public function ingredients()
+{
+    return $this->belongsToMany(Ingredient::class, 'product_ingredients')
+                ->withPivot('quantity')
+                ->withTimestamps();
+}
+
 }

@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Subcategory;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        // Load relasi kategori & subkategori supaya tidak n+1 query
-        $products = Product::with(['category', 'subcategory'])->get();
+        $products = Product::with(['category', 'subcategory', 'ingredients'])->get();
         return view('products.index', compact('products'));
     }
 
@@ -20,7 +20,8 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $subcategories = Subcategory::all();
-        return view('products.create', compact('categories', 'subcategories'));
+        $ingredients = Ingredient::all();
+        return view('products.create', compact('categories', 'subcategories', 'ingredients'));
     }
 
     public function store(Request $request)
@@ -49,7 +50,18 @@ class ProductController extends Controller
             $data['image'] = $filename;
         }
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        // Simpan bahan baku
+        if ($request->has('ingredients')) {
+            $syncData = [];
+            foreach ($request->ingredients as $id => $data) {
+                if (isset($data['selected']) && $data['selected'] == 1) {
+                    $syncData[$id] = ['quantity' => $data['quantity'] ?? 0];
+                }
+            }
+            $product->ingredients()->sync($syncData);
+        }
 
         return redirect()->route('products.index')
             ->with('success', 'Produk berhasil ditambahkan.');
@@ -59,8 +71,9 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $subcategories = Subcategory::all();
+        $ingredients = \App\Models\Ingredient::all();
 
-        return view('products.edit', compact('product', 'categories', 'subcategories'));
+        return view('products.edit', compact('product', 'categories', 'subcategories', 'ingredients'));
     }
 
     public function update(Request $request, Product $product)
@@ -90,6 +103,17 @@ class ProductController extends Controller
         }
 
         $product->update($data);
+
+        // Update bahan baku
+        $syncData = [];
+        if ($request->has('ingredients')) {
+            foreach ($request->ingredients as $id => $data) {
+                if (isset($data['selected']) && $data['selected'] == 1) {
+                    $syncData[$id] = ['quantity' => $data['quantity'] ?? 0];
+                }
+            }
+        }
+        $product->ingredients()->sync($syncData);
 
         return redirect()->route('products.index')
             ->with('success', 'Produk berhasil diperbarui.');

@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <div class="flex flex-row min-h-screen bg-gray-100 ml-[250px] mt-[64px] pr-4 gap-4">
+    <div class="flex flex-row min-h-screen bg-gray-100  pr-4 gap-4">
         <div class="flex-1 flex flex-col">
             <!-- Search Section -->
             <div class="p-4 bg-white shadow-md rounded-lg mx-4 mt-4">

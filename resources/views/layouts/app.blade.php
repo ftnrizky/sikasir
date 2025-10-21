@@ -20,19 +20,18 @@
 </head>
 
 <body class="bg-gray-100 text-gray-900">
-    <div class="flex min-h-screen">
-        {{-- Sidebar --}}
-        @include('components.sidebar')
+    {{-- Sidebar --}}
+    @include('components.sidebar')
 
-        <div class="flex-1 flex flex-col">
-            {{-- Navbar --}}
-            @include('components.navbar')
+    {{-- Main Wrapper --}}
+    <div class="ml-64 flex flex-col min-h-screen transition-all duration-300">
+        {{-- Navbar --}}
+        @include('components.navbar')
 
-            {{-- Main Content --}}
-            <main class="flex-1 p-4 overflow-y-auto">
-                @yield('content')
-            </main>
-        </div>
+        {{-- Main Content --}}
+        <main class="flex-1 p-6 overflow-y-auto">
+            @yield('content')
+        </main>
     </div>
 
     {{-- jQuery & DataTables JS --}}

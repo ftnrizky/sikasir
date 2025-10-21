@@ -9,13 +9,16 @@ export default {
         './resources/views/**/*.blade.php',
     ],
 
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
+theme: {
+    extend: {
+        fontFamily: {
+            sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        },
+        colors: {
+            brand: "#ab5c16", // nama custom
         },
     },
+},
 
-    plugins: [forms],
+plugins: [forms],
 };

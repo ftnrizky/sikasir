@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('barcode')->nullable();
-            $table->integer('stock');
-            $table->string('image')->nullable(); // Tambahkan kolom image
+            $table->integer('harga_modal');
+            $table->integer('harga_jual');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

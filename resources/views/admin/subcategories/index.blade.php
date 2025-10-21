@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="ml-64 p-6 overflow-x-hidden bg-gray-100 text-gray-900">
@@ -14,7 +14,7 @@
             <thead class="bg-gray-100">
                 <tr>
                     <th class="py-2 px-4 text-left">Nama SubKategori</th>
-                    <th class="py-2 px-4 text-left">Deskripsi</th>
+                    {{-- <th class="py-2 px-4 text-left">Deskripsi</th> --}}
                     <th class="py-2 px-4 text-left">Aksi</th>
                 </tr>
             </thead>
@@ -22,12 +22,12 @@
                 @forelse($subcategories as $subcategory)
                 <tr class="border-t">
                     <td class="py-2 px-4">{{ $subcategory->name }}</td>
-                    <td class="py-2 px-4">{{ $subcategory->description }}</td>
+                    {{-- <td class="py-2 px-4">{{ $subcategory->description }}</td> --}}
                     <td class="py-2 px-4">
                         <div class="flex space-x-2">
                             <a href="{{ route('admin.subcategories.edit', $subcategory->id) }}"
                                 class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-edit">Edit</i>
                             </a>
                             <form id="delete-category-form-{{ $subcategory->id }}"
                                 action="{{ route('admin.subcategories.destroy', $subcategory->id) }}" method="POST"
@@ -37,7 +37,7 @@
                             </form>
                             <button onclick="deleteCategory({{ $subcategory->id }})"
                                 class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                                <i class="fas fa-trash"></i>
+                                <i class="fas fa-trash">Dalate</i>
                             </button>
                         </div>
                     </td>

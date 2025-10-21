@@ -1,5 +1,5 @@
 <header
-    class="fixed top-0 left-64 right-0 z-30 bg-amber-900 text-stone-50 shadow-sm border-b border-gray-200 select-none h-16">
+    class="fixed top-0 left-64 right-0 z-30 bg-[#ab5c16] text-stone-50 shadow-sm border-b border-gray-200 select-none h-16">
     <div class="flex items-center justify-between px-4 h-full">
         <!-- Mobile Menu -->
         <button class="lg:hidden p-2 text-fuchsia-50 hover:bg-amber-950 rounded-lg" onclick="toggleSidebar()">
@@ -9,7 +9,9 @@
         <!-- Title -->
         <div class="hidden lg:block">
             <h1 class="text-xl font-semibold text-fuchsia-50">Sistem Kasir</h1>
-            <p class="text-sm text-fuchsia-50">Selamat datang, {{ auth()->user()->name }}!</p>
+            @if(request()->routeIs('dashboard'))
+                <p class="text-sm text-fuchsia-50">Selamat datang, {{ auth()->user()->name }}!</p>
+            @endif
         </div>
 
         <!-- Right Actions -->
@@ -32,8 +34,10 @@
 
             <!-- Profile -->
             <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 p-2 hover:bg-amber-950 rounded-lg">
+                 @if(request()->routeIs('dashboard'))
                 <span class="text-sm font-medium text-fuchsia-50">{{ auth()->user()->name }} -
                     {{ auth()->user()->role }}</span>
+                @endif
                 <div class="w-8 h-8 bg-gray-800/10 rounded-full flex items-center justify-center">
                     <i class="bi bi-person-circle text-fuchsia-50"></i>
                 </div>

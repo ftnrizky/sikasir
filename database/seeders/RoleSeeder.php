@@ -11,7 +11,7 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $roles = ['admin', 'kasir', 'owner', 'bar', 'kitchen', 'pelanggan'];
+        $roles = ['admin', 'kasir', 'bar', 'kitchen', 'pelanggan'];
 
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
@@ -30,13 +30,6 @@ class RoleSeeder extends Seeder
         );
 
         $kasir->assignRole('kasir');
-        
-        $owner = User::firstOrCreate(
-            ['email' => 'owner@gmail.com'],
-            ['name' => 'Owner Sikasir', 'password' => Hash::make('owner123')]
-        );
-
-        $owner->assignRole('owner');
         
         $kitchen = User::firstOrCreate(
             ['email' => 'kitchen@gmail.com'],
